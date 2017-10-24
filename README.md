@@ -10,6 +10,8 @@ The Dog mk3 will be an application suitable for the needs of a person that wants
 
 
 # Homework related aspects
+ptie1975 - my faculty assigned username
+
 I'll have input forms for adding courses or skills you want to improve.
 I'll have lists of skills with associated invested hours.
 I'll display a chart with hours invested in a week & some more progress related charting.
