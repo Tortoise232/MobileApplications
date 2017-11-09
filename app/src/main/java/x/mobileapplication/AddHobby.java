@@ -32,6 +32,7 @@ public class AddHobby extends AppCompatActivity {
                                         description.getText().toString(),
                                         Integer.valueOf(nrHours.getText().toString()));
                 Log.v("ListActivity", "" + List.hobbyCtrl.getHobbies().size());
+
                 finish();
             }
         });

@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="x.mobileapplication.AddHobby"
     tools:showIn="@layout/activity_add_hobby"
@@ -21,7 +22,7 @@
         android:ems="10"
         android:text="Description"
         android:id="@+id/editText3"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/darker_gray"
         android:layout_below="@+id/editText"
         android:layout_alignLeft="@+id/editText"
         android:layout_alignStart="@+id/editText"
@@ -32,9 +33,9 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:text="InvestedHours"
+        android:text="0"
         android:id="@+id/editText4"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/darker_gray"
         android:layout_below="@+id/editText3"
         android:layout_alignLeft="@+id/editText3"
         android:layout_alignStart="@+id/editText3"
@@ -47,7 +48,7 @@
         android:text="Name"
         android:ems="10"
         android:id="@+id/editText"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/darker_gray"
         android:layout_marginTop="39dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -59,7 +60,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/editText"
         android:layout_alignStart="@+id/editText"
-        android:id="@+id/textView2" />
+        android:id="@+id/textView2"
+        android:background="@android:color/holo_green_light"/>
 
     <TextView
         android:text="Description:"
@@ -69,7 +71,8 @@
         android:layout_alignLeft="@+id/editText"
         android:layout_alignStart="@+id/editText"
         android:layout_marginTop="21dp"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:background="@android:color/holo_green_light"/>
 
     <TextView
         android:text="Invested hours:"
@@ -79,6 +82,7 @@
         android:id="@+id/textView8"
         android:layout_below="@+id/editText3"
         android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4" />
+        android:layout_alignStart="@+id/editText4"
+        android:background="@android:color/holo_green_light"/>
 
 </RelativeLayout>

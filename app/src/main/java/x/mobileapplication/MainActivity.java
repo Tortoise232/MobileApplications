@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private HobbyController hobbyCtrl = new HobbyController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
