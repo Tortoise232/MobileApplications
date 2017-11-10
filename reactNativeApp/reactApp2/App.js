@@ -1,121 +1,80 @@
 import React, {Component} from 'react';
-import {Alert, Button, ListView, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import { AppRegistry, Image, Text, View, ListView, StyleSheet } from 'react-native';
 
 
-// Row data (hard-coded)
-const rows =
-    [
-      {id: 0, text: 'Goblin', cr: 1}, {id: 1, text: 'Hobgoblin', cr: 1},
-      {id: 2, text: 'Black Dragon', cr: 10}, {id: 3, text: 'Lich', cr: 12},
-      {id: 4, text: 'Tarrasque', cr: 20}
-    ]
+const rows = [
+  'Singing',
+  'Dancing',
+  'Composing',
+]
 
-    // wat is dis UPDATE: I KNOW WHAt THESE ARE NOW
-    // function that checks whether shit changed
-    const rowHasChanged = (r1, r2) => r1.cr !== r2.cr
-// wat is dis also
-// this creates a new DataSource with the checking function from above
-const ds = new ListView.DataSource({rowHasChanged})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 22
+  },
+  row: {
+    padding: 15,
+    marginBottom: 5,
+    backgroundColor: 'limegreen',
+  },
+});
 
-
-               class MonsterList extends React.Component {
-  static navigationOptions = {
-    title: 'Browse Screen',
+export class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    }
+    return (
+      <Image source={pic} style={
+    { width: 193, height: 110 }}/>
+    );
   }
+}
 
-  state = {
-    dataSource: ds.cloneWithRows(rows),
-    dataArray: rows,
+export class HobbyList extends Component{
+   constructor() {
+    super();
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(rows),
+      dataArray: rows
+    };
   }
-
-  _onPressRow(rowData) {
-    const {navigate} = this.props.navigation;
-    // rowData.cr = rowData.cr - 1
-    console.log(rowData)
-    navigate('Edit', {text: rowData.text, cr: rowData.cr})
-    /*
-    var newDs = [];
-newDs = this.state.dataArray.slice();
-newDs[rowData.id].cr = newDs[rowData.id].cr - 1;
-console.log(newDs[rowData.id])
-    this.setState({
-    dataSource: this.state.dataSource.cloneWithRows(newDs)
-})*/
-    // Alert.alert('You tapped a button!')
+   render() {
+    return (
+      <ListView
+        style={styles.container}
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => <Text>ce pula mea{rowData}</Text>}
+      />
+    );
   }
+}
 
-
-  renderRow =
-      (rowData) => {
-        return (<TouchableHighlight onPress = {() => this._onPressRow(rowData)}>
-                <Text style = {styles.row}>{rowData.text} CR:
-                    {rowData.cr}</Text>
-			</TouchableHighlight>)
-      }
-
+export class Hobby extends Component{
+  constructor(props){
+      super(props)
+  }
+  render(){
+  let name = this.props.name;
+  let description = this.props.description;
+  let hours = this.props.hours;
+    return(
+      <View style={styles}>
+      <Text> {name} {description} {hours}</Text>
+      </View>
+    );
+  }
+}
+export default class HelloWorldApp extends Component {
   render() {
     return (
-        <ListView style = {styles.container} dataSource =
-             {this.state.dataSource} renderRow =
-         {
-           this.renderRow
-         } />
-  	)
+      <View>
+      <HobbyList/>
+      <Hobby name='dancing' description='jigglebabe' hours='3'/>
+      </View>
+    );
   }
 }
 
-class details extends React.Component{
-	static navigationOptions ={
-		title: 'details',
-	}
-	render(){
-		const { params } = this.props.navigation.state.params;
-		return(
-			<View style={styles.container}>
-				<Text>this is the edit screen</Text>
-        <Text>{this.props.navigation.state.params.text}<
-            /Text>
-				<Text>CR: {this.props.navigation.state.params.cr}</Text>
-        <Text></Text>
-			</View>);
-  }
-  }
-
-class BrowseScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Browse Screen',
-  } render() {
-                return (
-			<View style={styles.container}>
-				<Text>Monster List</Text>
-				<MonsterList/>
-			</View>
-		);
-	}
-}
-
-export const RootNavigator = StackNavigator({
-	Browse: { screen: MonsterList },
-	Edit: { screen: details },
-});
-/*
-export default class App extends React.Component{
-
-      render() {
-                return(
-			<View style={styles.container}>
-				<BrowseScreen/>
-			</View>
-		)
-	}
-}
-*/
-                export default RootNavigator; const styles = StyleSheet.create({
-                  container: {flex: 1, paddingTop: 22},
-                  row: {
-                    padding: 15,
-                    marginBottom: 5,
-                    backgroundColor: 'skyblue',
-                  },
-                });
