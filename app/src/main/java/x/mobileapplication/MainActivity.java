@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               List myList = new List();
                startActivity(listIntent);
             }
         });
@@ -43,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button timeButton = (Button) findViewById(R.id.timeHobby);
         timeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentView(R.layout.activity_list);
-            }
-        });
-    }
+                @Override
+                public void onClick(View v) {
+                    startActivity(listIntent);
+                }
+            });
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
