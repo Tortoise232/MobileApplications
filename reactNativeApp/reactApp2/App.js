@@ -4,21 +4,20 @@ import {StackNavigator} from 'react-navigation';
 
 
 // Row data (hard-coded)
-const rows =
+rows =
     [
       {id: 0, text: 'Dancing', hours: 5}, {id: 1, text: 'Painting', hours: 1},
       {id: 2, text: 'Singing', hours: 10}
     ]
 
-    // wat is dis UPDATE: I KNOW WHAt THESE ARE NOW
-    // function that checks whether shit changed
-    const rowHasChanged = (r1, r2) => r1 !== r2
-// wat is dis also
+
+const rowHasChanged = (r1, r2) => r1 !== r2
+
 // this creates a new DataSource with the checking function from above
 const ds = new ListView.DataSource({rowHasChanged})
 
 
-               class MonsterList extends React.Component {
+class HobbyList extends React.Component {
   constructor(props) {
     super(props);
     // var ds = new ListView.DataSource({rowHasChanged});
@@ -31,12 +30,7 @@ const ds = new ListView.DataSource({rowHasChanged})
   static navigationOptions = {
     title: 'Browse Screen',
   }
-  /*
-          state = {
-                  dataSource: ds.cloneWithRows(rows),
-                  dataArray: rows,
-          }
-  */
+
   _onPressRow(rowData) {
     const {navigate} = this.props.navigation;
     navigate('Edit', {'row': rowData})
@@ -44,8 +38,18 @@ const ds = new ListView.DataSource({rowHasChanged})
         var newDs = [];
     newDs = rows.slice();
     this.setState({dataSource: ds.cloneWithRows(newDs)});
-    console.log(rowData)
+
   }
+
+    _onLongPressRow(rowData) {
+        const {navigate} = this.props.navigation;
+        navigate('Delete', {'row': rowData})
+
+        var newDs = [];
+        newDs = rows.slice();
+        this.setState({dataSource: ds.cloneWithRows(newDs)});
+
+    }
 
   componentDidMount() {
     var newDs = [];
@@ -53,36 +57,140 @@ const ds = new ListView.DataSource({rowHasChanged})
     this.setState({dataSource: ds.cloneWithRows(newDs)});
   }
 
-        renderRow = (rowData) => {
-    return (<TouchableHighlight onPress = {() => this._onPressRow(rowData)}>
-            <Text style = {styles.row}>{rowData.text} CR:
+  renderRow = (rowData) => {
+    return (<TouchableHighlight onPress = {() => this._onPressRow(rowData)} onLongPress = {() => this._onLongPressRow(rowData)}>
+            <Text style = {styles.row}>Title:{rowData.text} Hours Invested:
                 {rowData.hours}</Text>
 			</TouchableHighlight>)
-	}
+  }
+  addHobby(){
+      const {navigate} = this.props.navigation;
+      navigate('Add')
+      var newDs = [];
+      newDs = rows.slice();
+      this.setState({dataSource: ds.cloneWithRows(newDs)});
+      console.log(rows)
+  }
 
   render() {
-  	return (
-  		<ListView style={styles.container}
-  			dataSource={this.state.dataSource}
-  			renderRow={
-    this.renderRow}
-  		/>
-  	)
+      return (
+          <View style={styles.container}>
+              <Button onPress={() => this.addHobby()} title=
+                  'ADD HOBBY'/>
+              <ListView style={styles.container}
+                    dataSource={this.state.dataSource}
+                    renderRow={
+                        this.renderRow}
+          />
+
+          </View>
+      )
   }
 }
 
+class DeleteScreen extends React.Component{
+    static navigationOptions ={
+        title: 'Delete Hobby?',
+    }
+    constructor(props){
+        super(props);
+        const rowData = this.props.navigation.state.params.row;
+        this.state ={ text: rowData.text, hours: rowData.hours }
+    }
+    _yes(){
+        var newDs = [];
+        for(var i=0; i < rows.length; i ++){
+            if(rows[i].text == this.state.text)
+                continue;
+            rows[i].id = newDs.length;
+            newDs.push(rows[i]);
+        }
+        rows = newDs;
+        const {navigate} = this.props.navigation;
+        navigate('Browse')
+    }
+    _no(){
+        const {navigate} = this.props.navigation;
+        navigate('Browse')
+    }
 
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text>Hobby name: {this.state.text}</Text>
+                <Text>Number Of hours invested: {this.state.hours}</Text>
+                <Button onPress={() => this._yes()} title=
+                    'YES'/>
+                <Button onPress={() => this._no()} title=
+                    'NO'/>
+            </View>
+        );
+    }
+}
+
+class AddScreen extends React.Component{
+    static navigationOptions ={
+        title: 'Add Hobby',
+    }
+    constructor(props){
+        super(props);
+        this.state ={ text: 'NULL', hours : 0}
+    }
+
+    _onPress() {
+        const {navigate} = this.props.navigation;
+        rows.push({id: rows.length, text: this.state.text, hours: this.state.hours})
+        navigate('Browse')
+    }
+
+    _onPressShare() {
+        Linking.openURL(
+            'mailto:petean.mihai232@yahoo.com?subject=abcdefg&body=' +
+            this.state.text)
+        const {navigate} = this.props.navigation;
+        navigate('Browse')
+    }
+
+    render(){
+        return (
+            <View style={styles.container}>
+                <Text>Hobby name:</Text>
+                <TextInput
+                    style=
+                        {
+                            {height: 40, borderColor: 'gray', borderWidth: 1}
+                        } value={this.state.text} onChangeText=
+                        {
+                            (text) => this.setState({text})
+                        }
+                />
+                <Text>Number Of hours invested:</Text>
+                <TextInput
+                    style=
+                        {
+                            {height: 40, borderColor: 'gray', borderWidth: 1}
+                        } value={this.state.hours} onChangeText=
+                        {
+                            (hours) => this.setState({hours})
+                        }
+                />
+                <Button onPress={() => this._onPress()} title=
+                    'SAVE'/>
+                <Button onPress={() => this._onPressShare()} title=
+                    'SHARE'/>
+            </View>
+        );
+    }
+}
 
 class EditScreen extends React.Component{
 	static navigationOptions ={
-		title: 'Edit Screen',
+		title: 'Edit Hobby',
 	}
 	constructor(props){
 		super(props);
 		const rowData = this.props.navigation.state.params.row;
 		this.state ={ text: rowData.text, cr: rowData.cr }
-		
-		//this.state.text = rowData.text
 	}
 
 	_onPress(rowData){
@@ -90,62 +198,75 @@ class EditScreen extends React.Component{
           var newDs = [];
           newDs = rows.slice();
           newDs[rowData.id].text = this.state.text;
-          newDs[rowData.id].cr = this.state.cr;
-          // this.props.navigation.goBack('Browse')
-        }
+          newDs[rowData.id].hours = this.state.hours;
+        const {navigate} = this.props.navigation;
+        navigate('Browse')
 
-        _onPressShare(){Linking.openURL(
+    }
+
+    _onPressShare() {
+        Linking.openURL(
             'mailto:petean.mihai232@yahoo.com?subject=abcdefg&body=' +
-            this.state.text)} render() {
-          const rowData = this.props.navigation.state.params.row;
-          // this.state.text = rowData.text
-          // console.log(newDs[rowData.id])
-          /*
-          this.setState({
-          dataSource: ds.cloneWithRows(newDs)
-    });*/
-                return(
-			<View style={styles.container}>
-				
-      			<TextInput
-                style =
-                {
-                  { height: 40, borderColor: 'gray', borderWidth: 1 }
-                } value = {this.state.cr} onChangeText =
-                {
-                  (text) => this.setState({text})
-                }
+            this.state.text)
+        const {navigate} = this.props.navigation;
+        navigate('Browse')
+    }
 
-                    />
-				<Text>CR: {rowData.cr}</Text >
-                    <Button onPress = {() => this._onPress(rowData)} title =
-                         'Save' />
-                    <Button onPress = {() => this._onPressShare()} title =
-                         'share' />
-                    </View>
-		);
-	}
+    render() {
+        const rowData = this.props.navigation.state.params.row;
+        return (
+            <View style={styles.container}>
+                <Text>Hobby name:</Text>
+                <TextInput
+                    style=
+                        {
+                            {height: 40, borderColor: 'gray', borderWidth: 1}
+                        } value={this.state.text} onChangeText=
+                        {
+                            (text) => this.setState({text})
+                        }
+                />
+                <Text>Number Of hours invested:</Text>
+                <TextInput
+                    style=
+                        {
+                            {height: 40, borderColor: 'gray', borderWidth: 1}
+                        } value={this.state.hours} onChangeText=
+                        {
+                            (hours) => this.setState({hours})
+                        }
+                />
+                <Button onPress={() => this._onPress(rowData)} title=
+                    'SAVE'/>
+                <Button onPress={() => this._onPressShare()} title=
+                    'SHARE'/>
+            </View>
+        );
+    }
 }
 
-class BrowseScreen extends React.Component{
-	static navigationOptions = {
-		title: 'Browse Screen',
-	}
-	render() {
-		return (
-			<View style={styles.container}>
-				<Text>Monster List</Text>
-                    <MonsterList /><
-                    /View>
-		);
-	}
+class BrowseScreen extends React.Component {
+    static navigationOptions = {
+        title: 'Browse Screen',
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text>Hobby List:</Text>
+                <HobbyList></HobbyList>
+            </View>
+        );
+    }
 }
 
 export const RootNavigator = StackNavigator({
-	Browse: { screen: MonsterList },
+	Browse: { screen: HobbyList },
 	Edit: { screen: EditScreen },
-});
-/ *
+    Add: { screen: AddScreen},
+    Delete: {screen: DeleteScreen},
+})
+ /*
                         export default class App extends React.Component {
 
 	render(){
@@ -159,13 +280,13 @@ export const RootNavigator = StackNavigator({
 */
 export default RootNavigator;
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 22
-  },
-  row: {
-  	padding: 15,
-  	marginBottom: 5,
-  	backgroundColor: 'skyblue',
-  },
+    container: {
+        flex: 1,
+        paddingTop: 22
+    },
+    row: {
+        padding: 15,
+        marginBottom: 5,
+        backgroundColor: 'skyblue',
+    },
 });
