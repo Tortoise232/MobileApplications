@@ -1,7 +1,23 @@
 import React, {Component} from 'react';
-import {Alert, Button, Linking, ListView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {Alert, Button, Linking, ListView, StyleSheet, Text, TextInput, TouchableHighlight, View, AsyncStorage} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
+//deal with Realm related things
+
+var Realm = require('realm');
+/*
+class Hobby {}
+Hobby.schema = {
+    name: 'Hobby',
+    primaryKey: 'id',
+    properties: {
+        text: 'string',
+        hours: {type: 'int', default: 0},
+    },
+};
+
+const realm = new Realm({schema: [Hobby]});
+*/
 
 // Row data (hard-coded)
 rows =
@@ -65,18 +81,39 @@ class HobbyList extends React.Component {
   }
   addHobby(){
       const {navigate} = this.props.navigation;
-      navigate('Add')
+      navigate('Add');
       var newDs = [];
       newDs = rows.slice();
       this.setState({dataSource: ds.cloneWithRows(newDs)});
       console.log(rows)
   }
 
+    async saveData(){
+
+        await AsyncStorage.setItem('@HobbyAppReact:key', rows);
+        console.log('SAVED');
+  }
+
+    async loadData(){
+      rows = await AsyncStorage.getItem('@HobbyAppReact:key').slice();
+        if (rows !== null){
+            // We have data!!
+            this.setState({dataSource: ds.cloneWithRows(rows)});
+            console.log('LOADED: ' + rows);
+        }
+        else
+            console.log('FAILED TO LOAD')
+
+  }
   render() {
       return (
           <View style={styles.container}>
               <Button onPress={() => this.addHobby()} title=
                   'ADD HOBBY'/>
+              <Button onPress={() => this.saveData()} title=
+                  'SAVE DATA'/>
+              <Button onPress={() => this.loadData()} title=
+                  'LOAD DATA'/>
               <ListView style={styles.container}
                     dataSource={this.state.dataSource}
                     renderRow={
