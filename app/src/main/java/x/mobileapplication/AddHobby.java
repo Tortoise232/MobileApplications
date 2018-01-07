@@ -1,7 +1,9 @@
 package x.mobileapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -71,14 +73,20 @@ public class AddHobby extends AppCompatActivity {
         pickColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showChart();
                 pickColorDialog();
             }
         });
     }
+
         public void pickColorDialog() {
             DialogBox dbx = new DialogBox(pickColor);
             dbx.show(getFragmentManager(), "dbxshow");
         }
 
+        public void showChart(){
+            final Intent intent = new Intent(this, PieChartActivity.class);
+            startActivity(intent);
+        }
 
 }

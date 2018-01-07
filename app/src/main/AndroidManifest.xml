@@ -27,6 +27,10 @@
             android:label="@string/title_activity_add_hobby"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".PieChartActivity"
+            android:label="PieChart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".EditHobby"
             android:label="@string/title_activity_edit_hobby"
             android:theme="@style/AppTheme.NoActionBar"></activity>

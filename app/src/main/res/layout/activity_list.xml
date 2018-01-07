@@ -35,4 +35,15 @@
         app:layout_anchorGravity="bottom|right"
         app:backgroundTint="@android:color/holo_green_dark" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/graphButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_dialog_info"
+        app:layout_anchor="@+id/include2"
+        app:layout_anchorGravity="bottom|center"
+        app:backgroundTint="@android:color/holo_green_dark" />
+
 </android.support.design.widget.CoordinatorLayout>
