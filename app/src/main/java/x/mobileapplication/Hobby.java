@@ -15,8 +15,13 @@ public class Hobby {
         this.description = description;
     }
 
-    public Hobby() {
+    public Hobby(String hobbyStr) {
+        String[] hobbyArr = hobbyStr.split("\n");
+        this.name = hobbyArr[0];
+        this.description = hobbyArr[1];
+        this.hoursInvested = Integer.parseInt(hobbyArr[2]);
     }
+
 
     public int getHoursInvested() {
         return hoursInvested;

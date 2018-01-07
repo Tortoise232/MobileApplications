@@ -13,12 +13,6 @@
     tools:context="x.mobileapplication.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dog3!"
-        android:id="@+id/textView" />
-
     <Button
         android:text="LIST HOBBIES"
         android:layout_width="wrap_content"
@@ -57,6 +51,19 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@android:color/holo_green_light"
-        android:layout_margin="10px"/>
+        android:layout_margin="10px" />
+
+    <Button
+        android:text="SAVE DATA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveToDB"
+        android:background="@android:color/holo_green_light"
+        android:layout_below="@+id/timeHobby"
+        android:layout_alignLeft="@+id/timeHobby"
+        android:layout_alignStart="@+id/timeHobby"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@+id/timeHobby"
+        android:layout_alignEnd="@+id/timeHobby" />
 
 </RelativeLayout>

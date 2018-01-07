@@ -3,4 +3,15 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_list">List</string>
     <string name="title_activity_add_hobby">AddHobby</string>
+    <string-array name="pick_color">
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>pink</item>
+        <item>yellow</item>
+        <item>gray</item>
+        <item>light_gray</item>
+        <item>black</item>
+    </string-array>
+    <string name="title_activity_edit_hobby">EditHobby</string>
 </resources>

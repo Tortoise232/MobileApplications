@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="x.mobileapplication">
 
-    <application
+    <application>
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Dog3"
@@ -25,6 +25,10 @@
         <activity
             android:name=".AddHobby"
             android:label="@string/title_activity_add_hobby"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditHobby"
+            android:label="@string/title_activity_edit_hobby"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

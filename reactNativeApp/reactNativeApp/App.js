@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, AsyncStorage, Button, Linking, ListView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
 import {StackNavigator} from 'react-navigation';
-
+import Chart from 'react-native-chart'
 // deal with Realm related things
 
 var Realm = require('realm');
@@ -18,7 +18,6 @@ Hobby.schema = {
 };
 
 const realm = new Realm({schema: [Hobby]});
-
 
 // Row data (hard-coded)
 rows =
@@ -246,6 +245,15 @@ class EditScreen extends React.Component{
 
   render() {
     const rowData = this.props.navigation.state.params.row;
+    var chartData = []
+    for(var i =0 ; i < rows.length; i ++)
+        chartData.push({x: i, y: parseInt(rows[i].hours)})
+      const chartDataTest = [[
+          [0, 1],
+          [1, 3],
+          [3, 7],
+          [4, 9],
+      ]];
     return (
         <View style = {styles.container}><Text>Hobby name:
                 </Text>
@@ -271,6 +279,12 @@ class EditScreen extends React.Component{
                 />
         <Button onPress = {() => this._onPress(rowData)} title = 'SAVE' />
         <Button onPress = {() => this._onPressShare()} title = 'SHARE' />
+        <View>
+        <Chart
+            data={chartDataTest}
+            style={styles.chart}
+            type='pie'
+        />
         </View>
         );
     }
@@ -310,10 +324,16 @@ export const RootNavigator = StackNavigator({
    */
     export default RootNavigator;
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingTop: 22},
-  row: {
-    padding: 15,
-    marginBottom: 5,
-    backgroundColor: 'skyblue',
-  },
+    container: {flex: 1, paddingTop: 22},
+    row: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+        marginBottom: 5,
+        backgroundColor: 'skyblue',
+    },
+    chart: {
+        width: 200,
+        height: 200,
+    },
 });

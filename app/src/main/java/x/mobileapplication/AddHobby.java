@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 public class AddHobby extends AppCompatActivity {
+    Button pickColor;
     public Intent prepEmail(String title, String description, int nrHours){
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         String[] emails = {"petean.mihai232@yahoo.com"};
@@ -31,9 +33,9 @@ public class AddHobby extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addHobby);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addFab = (FloatingActionButton) findViewById(R.id.addHobby);
+        FloatingActionButton mailFab = (FloatingActionButton) findViewById(R.id.mailHobby);
+        mailFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ListView listView = (ListView) findViewById(R.id.listView);
@@ -43,12 +45,40 @@ public class AddHobby extends AppCompatActivity {
                 String parsedName = name.getText().toString();
                 String parsedDescription = description.getText().toString();
                 Integer parsedHours = Integer.valueOf(nrHours.getText().toString());
-                List.hobbyCtrl.addHobby(parsedName, parsedDescription, parsedHours);
-                Log.v("ListActivity", "" + List.hobbyCtrl.getHobbies().size());
+                MainActivity.hobbyCtrl.addHobby(parsedName, parsedDescription, parsedHours);
+                Log.v("ListActivity", "" + MainActivity.hobbyCtrl.getHobbies().size());
                 startActivity(Intent.createChooser(prepEmail(parsedName, parsedDescription, parsedHours), "Send Email"));
                 finish();
             }
         });
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listView = (ListView) findViewById(R.id.listView);
+                EditText name = (EditText) findViewById(R.id.editText);
+                EditText description = (EditText) findViewById(R.id.editText3);
+                EditText nrHours = (EditText) findViewById(R.id.editText4);
+                String parsedName = name.getText().toString();
+                String parsedDescription = description.getText().toString();
+                Integer parsedHours = Integer.valueOf(nrHours.getText().toString());
+                MainActivity.hobbyCtrl.addHobby(parsedName, parsedDescription, parsedHours);
+                Log.v("ListActivity", "" + MainActivity.hobbyCtrl.getHobbies().size());
+                finish();
+            }
+        });
+
+        pickColor = (Button) findViewById(R.id.colorPicker);
+        pickColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickColorDialog();
+            }
+        });
     }
+        public void pickColorDialog() {
+            DialogBox dbx = new DialogBox(pickColor);
+            dbx.show(getFragmentManager(), "dbxshow");
+        }
+
 
 }

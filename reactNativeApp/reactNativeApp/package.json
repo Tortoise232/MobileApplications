@@ -7,8 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-charts": "^0.1.1",
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-chart": "^1.0.8-beta",
     "react-navigation": "^1.0.0-beta.22",
     "realm": "^2.1.1"
   },
